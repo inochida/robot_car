@@ -1,0 +1,76 @@
+# Single Point Positioning (SPP) Node Configuration
+#
+# Usage:
+#   ros2 run gnss_ros_standardization single_point_positioning --ros-args \
+#     --params-file config/single_point_positioning.yaml
+
+single_point_positioning:
+  ros__parameters:
+    # ==========================================================================
+    # Input / Output
+    # ==========================================================================
+    
+    # TCP port for RTKPLOT stream (providing NMEA output)
+    tcp_port: 8002
+    
+    # Input topics
+    topics:
+      observation: "/gnss/observation"
+      ephemeris: "/gnss/ephemeris"
+      solution: "/gnss/solution"
+
+    # Fixed Origin for Local Position (ENU)
+    # If 'pos' is set to non-zero, this position is used as the origin.
+    # If all 0.0, the first valid solution will be used as the origin (Datum).
+    fixed_origin:
+      # Position type (ecef or llh)
+      postype: "llh"
+      # Position values (X/Y/Z in meters for ECEF, Lat/Lon/Hgt in deg/deg/m for LLH)
+      # pos: [35.134709472, 136.977574273, 104.7180]
+      pos: [0.0, 0.0, 0.0]
+
+    # ==========================================================================
+    # Processing Options
+    # ==========================================================================
+    
+    # Excluded Satellites (e.g. ["G01", "R03"])
+    excluded_satellites: [""]
+
+    # Elevation mask in degrees
+    elevation_mask_deg: 15.0
+
+    # SNR mask (dBHz) at 5, 15, 25, 35, 45, 55, 65, 75, 85 deg
+    # Set 'enable' to true to apply these masks.
+    snrmask:
+      enable: false
+      # L1/E1/B1
+      l1: [35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0]
+      # L2/E5b/B2
+      l2: [35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0]
+      # L5/E5a/B2a
+      l5: [35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0]
+
+    # ==========================================================================
+    # Navigation Systems
+    # ==========================================================================
+    # Set to true to enable processing for specific systems
+    nav_systems:
+      gps: true
+      glo: true
+      gal: true
+      bds: true
+      qzs: true
+      irn: true
+      sbs: false
+
+    # ==========================================================================
+    # Frequencies
+    # ==========================================================================
+    # Enable specific frequency bands
+    # L1: GPS L1, GLO G1, GAL E1, BDS B1, QZS L1
+    # L2: GPS L2, GLO G2, BDS B2
+    # L5: GPS L5, GAL E5a, BDS B2a, QZS L5
+    frequencies:
+      enable_l1: true
+      enable_l2: true
+      enable_l5: false

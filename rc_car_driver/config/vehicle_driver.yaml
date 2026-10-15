@@ -1,0 +1,27 @@
+# Calibration / configuration for the vehicle_driver node.
+# Tune the *_us values against the real servo / ESC (see install.md phase 2).
+vehicle_driver:
+  ros__parameters:
+    # --- common ---
+    pwm_frequency: 50.0        # Hz (RC servo/ESC standard)
+    pwm_chip: 0                # sysfs pwmchip (Pi4=0, Pi5=2)
+    control_rate_hz: 50.0      # PWM refresh / watchdog tick
+    watchdog_timeout_s: 0.5    # no command for longer than this -> neutral
+    arm_duration_s: 2.0        # hold neutral at startup (ESC arming)
+
+    # --- steering: PWM channel 0 / GPIO12 ---
+    steering_channel: 0
+    steering_neutral_us: 1500.0     # straight ahead (trimmed: +5deg cmd was straight)
+    steering_min_us: 1075.0         # right full lock (was 1000; servo stalled past here)
+    steering_max_us: 1947.0         # left full lock (was 2000)
+    max_steering_angle_deg: 25.0    # full lock at +/-25 deg (measured on chassis)
+    steering_direction: 1           # set -1 if left/right are inverted
+
+    # --- throttle: PWM channel 1 / GPIO13 (ESC) ---
+    throttle_channel: 1
+    throttle_neutral_us: 1500.0     # full stop
+    throttle_min_us: 1000.0
+    throttle_max_us: 2000.0
+    max_speed_mps: 3.0              # speed mapped to full throttle (matches key_nav
+                                    # max_speed=3.0; physical m/s to be calibrated later)
+    throttle_direction: -1          # this ESC drives FORWARD on the low-pulse side

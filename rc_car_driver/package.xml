@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>rc_car_driver</name>
+  <version>0.1.0</version>
+  <description>
+    Hardware-PWM based low-level driver for a Tamiya RC car on Raspberry Pi.
+    Subscribes to ackermann_msgs/AckermannDriveStamped and drives a steering
+    servo and ESC via the SoC hardware PWM (GPIO12 / GPIO13).
+  </description>
+  <maintainer email="taro@furo.org">taro</maintainer>
+  <license>MIT</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>ackermann_msgs</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
